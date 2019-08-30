@@ -298,14 +298,6 @@ class Widget(WidgetBase):
         `on_touch_up`: `(touch, )`
             Fired when an existing touch disappears. `touch` is the touch
             object.
-        `on_kv_post`: `(base_widget, )`
-            Fired after all the kv rules associated with the widget
-            and all other widgets that are in any of those rules have had
-            all their kv rules applied. `base_widget` is the base-most widget
-            whose instantiation triggered the kv rules (i.e. the widget
-            instantiated from Python, e.g. ``MyWidget()``).
-
-            .. versionchanged:: 1.11.0
 
     .. warning::
         Adding a `__del__` method to a class derived from Widget with Python
@@ -325,8 +317,7 @@ class Widget(WidgetBase):
     '''
 
     __metaclass__ = WidgetMetaclass
-    __events__ = (
-        'on_touch_down', 'on_touch_move', 'on_touch_up', 'on_kv_post')
+    __events__ = ('on_touch_down', 'on_touch_move', 'on_touch_up')
     _proxy_ref = None
 
     def __init__(self, **kwargs):
@@ -355,14 +346,9 @@ class Widget(WidgetBase):
 
         # Apply all the styles.
         if not no_builder:
-            rule_children = []
-            self.apply_class_lang_rules(
-                ignored_consts=self._kwargs_applied_init,
-                rule_children=rule_children)
-
-            for widget in rule_children:
-                widget.dispatch('on_kv_post', self)
-            self.dispatch('on_kv_post', self)
+            self.before_class_rule()
+            Builder.apply(self, ignored_consts=self._kwargs_applied_init)
+            self.after_class_rule()
 
         # Bind all the events.
         if on_args:
@@ -392,77 +378,11 @@ class Widget(WidgetBase):
     def __hash__(self):
         return id(self)
 
-    def apply_class_lang_rules(
-            self, root=None, ignored_consts=set(), rule_children=None):
-        '''
-        Method that is called by kivy to apply the kv rules of this widget's
-        class.
+    def before_class_rule(self):
+        pass
 
-        :Parameters:
-            `root`: :class:`Widget`
-                The root widget that instantiated this widget in kv, if the
-                widget was instantiated in kv, otherwise ``None``.
-            `ignored_consts`: set
-                (internal) See :meth:`~kivy.lang.builder.BuilderBase.apply`.
-            `rule_children`: list
-                (internal) See :meth:`~kivy.lang.builder.BuilderBase.apply`.
-
-        This is useful to be able to execute code before/after the class kv
-        rules are applied to the widget. E.g. if the kv code requires some
-        properties to be initialized before it is used in a binding rule.
-        If overwriting remember to call ``super``, otherwise the kv rules will
-        not be applied.
-
-        In the following example,
-
-        .. code-block:: python
-
-            class MyWidget(Widget):
-                pass
-
-            class OtherWidget(MyWidget):
-                pass
-
-        .. code-block:: kv
-
-        <MyWidget>:
-            my_prop: some_value
-
-        <OtherWidget>:
-            other_prop: some_value
-
-        When ``OtherWidget`` is instantiated with ``OtherWidget()``, the
-        widget's :meth:`apply_class_lang_rules` is called and it applies the
-        kv rules of this class - ``<MyWidget>`` and ``<OtherWidget>``.
-
-        Similarly, when the widget is instantiated from kv, e.g.
-
-        .. code-block:: kv
-
-            <MyBox@BoxLayout>:
-                height: 55
-                OtherWidget:
-                    width: 124
-
-        ``OtherWidget``'s :meth:`apply_class_lang_rules` is called and it
-        applies the kv rules of this class - ``<MyWidget>`` and
-        ``<OtherWidget>``.
-
-        .. note::
-
-            It applies only the class rules not the instance rules. I.e. in the
-            above kv example in the ``MyBox`` rule when ``OtherWidget`` is
-            instantiated, its :meth:`apply_class_lang_rules` applies the
-            ``<MyWidget>`` and ``<OtherWidget>`` rules to it - it does not
-            apply the ``width: 124`` rule. The ``width: 124`` rule is part of
-            the ``MyBox`` rule and is applied by the ``MyBox``'s instance's
-            :meth:`apply_class_lang_rules`.
-
-        .. versionchanged:: 1.11.0
-        '''
-        Builder.apply(
-            self, ignored_consts=ignored_consts,
-            rule_children=rule_children)
+    def after_class_rule(self):
+        pass
 
     #
     # Collision
@@ -566,9 +486,6 @@ class Widget(WidgetBase):
         for child in self.children[:]:
             if child.dispatch('on_touch_up', touch):
                 return True
-
-    def on_kv_post(self, base_widget):
-        pass
 
     #
     # Tree management
