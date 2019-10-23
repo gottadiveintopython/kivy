@@ -1801,7 +1801,7 @@ class WindowBase(EventDispatcher):
         '''
         pass
 
-    def on_textedit(self, text):
+    def on_textedit(self, text, start, length):
         '''Event called when inputting with IME.
         The string inputting with IME is set as the parameter of
         this event.
