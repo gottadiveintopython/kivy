@@ -7,8 +7,8 @@ Layouts are containers used to arrange widgets in a particular manner.
         Widgets can be anchored to the 'top', 'bottom', 'left',
         'right' or 'center'.
     :mod:`BoxLayout <kivy.uix.boxlayout>`:
-        Widgets are arranged sequentially, in either a 'vertical'
-        or a 'horizontal' orientation.
+        Widgets are arranged sequentially, in a 'lr' (left to right)
+        or 'bt' (bottom to top) orientation.
     :mod:`FloatLayout <kivy.uix.floatlayout>`:
         Widgets are essentially unrestricted.
     :mod:`RelativeLayout <kivy.uix.relativelayout>`:

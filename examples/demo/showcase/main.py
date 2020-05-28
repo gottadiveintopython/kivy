@@ -168,7 +168,7 @@ Button:
             if not layout.get_parent_window():
                 return
             if len(layout.children) > 5:
-                layout.orientation = 'vertical'\
+                layout.orientation = 'tb'\
                     if layout.orientation == 'horizontal' else 'horizontal'
                 layout.clear_widgets()
             layout.add_widget(Builder.load_string('''

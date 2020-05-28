@@ -45,7 +45,7 @@ Builder.load_string('''
     content:content
     BoxLayout:
         id: content
-        orientation: 'vertical'
+        orientation: 'tb'
         ColorPicker:
             id: clr_picker
             color: root.color
@@ -62,7 +62,7 @@ Builder.load_string('''
                 on_release: root.dismiss()
 
 <LeftPanel@BoxLayout>
-    orientation: 'vertical'
+    orientation: 'tb'
     padding: '2pt'
     canvas.before:
         Color:

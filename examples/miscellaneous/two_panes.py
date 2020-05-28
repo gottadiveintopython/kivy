@@ -10,7 +10,7 @@ from kivy.lang import Builder
 Builder.load_string('''
 <MainWidget>:
     BoxLayout:
-        orientation: 'vertical'
+        orientation: 'tb'
         Button:
             text: 'some string '
             on_press: the_right_pane.text += self.text

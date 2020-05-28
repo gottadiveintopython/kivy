@@ -19,7 +19,7 @@ Builder.load_string('''
     font_name: self.text if self.text else self.font_name
 
 <Unicode_TextInput>
-    orientation: 'vertical'
+    orientation: 'tb'
     txt_input: unicode_txt
     spnr_fnt: fnt_spnr
     BoxLayout:
@@ -63,7 +63,7 @@ Builder.load_string('''
         size: root.size
         pos: root.pos
         BoxLayout:
-            orientation: "vertical"
+            orientation: "tb"
             size_hint: .2, 1
             Button:
                 size_hint: 1, .2
@@ -95,7 +95,7 @@ Builder.load_string('''
             Label:
                 text: 'BookMarks'
         BoxLayout:
-            orientation: "vertical"
+            orientation: "tb"
             FileChooserListView:
                 id: filechooser
                 filters: ['*.ttf']

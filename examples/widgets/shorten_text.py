@@ -29,7 +29,7 @@ kv = '''
         center_x: root.value_pos[0]
 
 BoxLayout:
-    orientation: 'vertical'
+    orientation: 'tb'
     BoxLayout:
         spacing: '10dp'
         padding: '4dp'

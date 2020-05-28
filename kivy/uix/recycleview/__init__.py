@@ -53,7 +53,7 @@ A minimal example might look something like this::
             default_size_hint: 1, None
             size_hint_y: None
             height: self.minimum_height
-            orientation: 'vertical'
+            orientation: 'tb'
     ''')
 
     class RV(RecycleView):
@@ -98,7 +98,7 @@ as follows::
             default_size_hint: 1, None
             size_hint_y: None
             height: self.minimum_height
-            orientation: 'vertical'
+            orientation: 'tb'
             multiselect: True
             touch_multiselect: True
     ''')

@@ -277,7 +277,7 @@
         pos: root.pos
         size: root.size
         size_hint: None, None
-        orientation: 'vertical'
+        orientation: 'tb'
         BoxLayout:
             size_hint_y: None
             height: '30dp'
@@ -1186,7 +1186,7 @@
     foreground_color: (1, 1, 1, 1) if self.hsv[2] * root.color[3] < .5 else (0, 0, 0, 1)
     wheel: wheel
     BoxLayout:
-        orientation: 'vertical' if root.width < root.height else 'horizontal'
+        orientation: 'tb' if root.width < root.height else 'lr'
         spacing: '5sp'
         StackLayout:
             orientation: 'tb-lr'

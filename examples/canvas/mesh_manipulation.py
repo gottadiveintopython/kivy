@@ -32,7 +32,7 @@ BoxLayout:
                 texture: app.mesh_texture
                 mode: 'triangle_fan'
     BoxLayout:
-        orientation: 'vertical'
+        orientation: 'tb'
         size_hint_x: None
         width: 100
         Slider:

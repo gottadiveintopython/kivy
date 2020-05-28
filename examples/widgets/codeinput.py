@@ -121,7 +121,7 @@ class CodeInputTest(App):
     files = ListProperty([None, ])
 
     def build(self):
-        b = BoxLayout(orientation='vertical')
+        b = BoxLayout(orientation='tb')
         languages = Spinner(
             text='language',
             values=sorted(['KvLexer', ] + list(lexers.LEXERS.keys())))

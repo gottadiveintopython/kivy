@@ -11,7 +11,7 @@ PageLayout:
                 pos: self.pos
                 size: self.size
 
-        orientation: 'vertical'
+        orientation: 'tb'
         Label:
             size_hint_y: None
             height: 1.5 * self.texture_size[1]
@@ -22,7 +22,7 @@ PageLayout:
             on_press: print("test")
 
     BoxLayout:
-        orientation: 'vertical'
+        orientation: 'tb'
         canvas:
             Color:
                 rgba: 109/255., 8/255., 57/255., 1

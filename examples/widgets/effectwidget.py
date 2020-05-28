@@ -62,7 +62,7 @@ class SpinnerRow(BoxLayout):
 example = Builder.load_string('''
 #:import Vector kivy.vector.Vector
 BoxLayout:
-    orientation: 'vertical'
+    orientation: 'tb'
     FloatLayout:
         ComparisonWidget:
             pos_hint: {'x': 0, 'y': 0}

@@ -103,7 +103,7 @@ kv = '''
         TabbedPanelItem:
             text: 'Test performance'
             BoxLayout:
-                orientation: 'vertical'
+                orientation: 'tb'
                 Label:
                     text: 'Test timeit performance with current label settings'
                 BoxLayout:

@@ -52,7 +52,7 @@ if __name__ == '__main__':
     Builder.load_string('''
 <MainWidget>:
     BoxLayout:
-        orientation: 'vertical'
+        orientation: 'tb'
         size: root.size
         BoxLayout:
             Label:

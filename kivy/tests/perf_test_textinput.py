@@ -13,11 +13,11 @@ Builder.load_string('''
     slider: slider
     text_input: text_input
     BoxLayout:
-        orientation: 'vertical'
+        orientation: 'tb'
         TextInput:
             id: text_input
         BoxLayout:
-            orientation: 'vertical'
+            orientation: 'tb'
             size_hint: 1, .2
             BoxLayout:
                 Button:

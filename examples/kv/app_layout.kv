@@ -4,7 +4,7 @@ BoxLayout:
 
     BoxLayout:
 
-        orientation: 'vertical' if bswitch.state == 'down' else 'horizontal'
+        orientation: 'tb' if bswitch.state == 'down' else 'lr'
 
         Button:
             id: btn1

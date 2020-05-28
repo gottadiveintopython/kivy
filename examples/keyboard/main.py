@@ -27,7 +27,7 @@ Builder.load_string('''
     displayLabel: displayLabel
     kbContainer: kbContainer
     BoxLayout:
-        orientation: 'vertical'
+        orientation: 'tb'
         Label:
             size_hint_y: 0.15
             text: "Available Keyboard Layouts"
@@ -55,7 +55,7 @@ Builder.load_string('''
     mode_spinner: mode_spinner
     FloatLayout:
         BoxLayout:
-            orientation: "vertical"
+            orientation: "tb"
             size_hint: 0.8, 0.8
             pos_hint: {"x": 0.1, "y": 0.1}
             padding: "5sp"

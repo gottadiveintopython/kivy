@@ -4,7 +4,7 @@ from kivy.uix.boxlayout import BoxLayout
 
 Builder.load_string('''
 [BlehItem@BoxLayout]:
-    orientation: 'vertical'
+    orientation: 'tb'
     Label:
         text: str(ctx.idx)
     Button:

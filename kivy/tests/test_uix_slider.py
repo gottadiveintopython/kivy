@@ -50,7 +50,7 @@ class SliderMoveTestCase(GraphicUnitTest):
     def test_slider_move(self):
         EventLoop.ensure_window()
         win = EventLoop.window
-        layout = BoxLayout(orientation='vertical')
+        layout = BoxLayout(orientation='tb')
 
         s_handle = _TestSliderHandle()
         s_all = _TestSliderAll()

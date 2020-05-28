@@ -447,7 +447,7 @@ if __name__ == '__main__':
         if x == 0:
             item.add_widget(Button(text='Content %d' % x))
         elif x == 1:
-            z = BoxLayout(orientation='vertical')
+            z = BoxLayout(orientation='tb')
             z.add_widget(Button(text=str(x), size_hint_y=None, height=35))
             z.add_widget(Label(text='Content %d' % x))
             item.add_widget(z)
@@ -475,7 +475,7 @@ if __name__ == '__main__':
     slider.bind(value=update_min_space)
 
     root = BoxLayout(spacing=20, padding=20)
-    controls = BoxLayout(orientation='vertical', size_hint_x=.3)
+    controls = BoxLayout(orientation='tb', size_hint_x=.3)
     controls.add_widget(btn)
     controls.add_widget(btn2)
     controls.add_widget(slider)

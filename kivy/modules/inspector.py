@@ -92,7 +92,7 @@ Builder.load_string('''
     treeview: treeview
     content: content
     BoxLayout:
-        orientation: 'vertical'
+        orientation: 'tb'
         id: layout
         size_hint_y: None
         height: 250

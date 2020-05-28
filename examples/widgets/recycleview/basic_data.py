@@ -26,7 +26,7 @@ kv = """
             size: self.size
             pos: self.pos
     rv: rv
-    orientation: 'vertical'
+    orientation: 'tb'
     GridLayout:
         cols: 3
         rows: 2
@@ -78,7 +78,7 @@ kv = """
             default_size_hint: 1, None
             size_hint_y: None
             height: self.minimum_height
-            orientation: 'vertical'
+            orientation: 'tb'
             spacing: dp(2)
 """
 

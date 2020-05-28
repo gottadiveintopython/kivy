@@ -98,7 +98,7 @@ Builder.load_string('''
             text: root.text
         BoxLayout:
             size_hint: None, 1
-            orientation: 'vertical'
+            orientation: 'tb'
             width: 22
             Image:
                 source: 'tools/theming/defaulttheme/close.png'
@@ -213,7 +213,7 @@ Builder.load_string('''
         BoxLayout:
             pos: tph.pos
             size: tph.size
-            orientation: 'vertical'
+            orientation: 'tb'
             Image:
                 source: 'sequenced_images/data/images/info.png'\
                     if tph.state == 'normal' else 'cityCC0.png'

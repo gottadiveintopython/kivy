@@ -63,7 +63,7 @@ root = Builder.load_string('''
         text: str(slider.value)[:4]
 
 BoxLayout:
-    orientation: 'vertical'
+    orientation: 'tb'
     BoxLayout:
         SliderWithValue:
             orientation: 'vertical'
@@ -93,7 +93,7 @@ BoxLayout:
         size_hint_y: None
         height: dp(80)
         BoxLayout:
-            orientation: 'vertical'
+            orientation: 'tb'
             size_hint_x: None
             width: dp(80)
             Label:
@@ -107,7 +107,7 @@ BoxLayout:
                 halign: 'left'
                 valign: 'middle'
         BoxLayout:
-            orientation: 'vertical'
+            orientation: 'tb'
             SliderWithValue:
                 min: 0
                 max: taw_container.width

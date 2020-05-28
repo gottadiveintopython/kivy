@@ -48,7 +48,7 @@ runTouchApp(Builder.load_string('''
     size_hint: .8, .8
     text: ''
     BoxLayout:
-        orientation: 'vertical'
+        orientation: 'tb'
         TextInput:
             multiline: True
             id: ti
@@ -130,7 +130,7 @@ runTouchApp(Builder.load_string('''
                         root.base_direction or None
         font_size: root.font_size
 BoxLayout:
-    orientation: 'vertical'
+    orientation: 'tb'
     ScrollView:
         id: sv
         bar_color: [.1, .75, .1, .95]
@@ -138,7 +138,7 @@ BoxLayout:
         bar_width: '20dp'
         BoxLayout:
             id: boxes
-            orientation: 'vertical'
+            orientation: 'tb'
             size_hint: None, None
             height: self.minimum_height
             width: sv.width - 25  # don't draw below scrollbar

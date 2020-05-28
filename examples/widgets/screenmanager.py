@@ -42,7 +42,7 @@ Builder.load_string('''
         size_hint: .5, None
         height: 250
         pos_hint: {'center_x': .5}
-        orientation: 'vertical'
+        orientation: 'tb'
 
         Button:
             text: 'Use SlideTransition with "up" direction'

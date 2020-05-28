@@ -4,7 +4,7 @@ from kivy.lang import Builder
 
 kv = '''
 BoxLayout:
-    orientation: 'vertical'
+    orientation: 'tb'
 
     Camera:
         id: camera

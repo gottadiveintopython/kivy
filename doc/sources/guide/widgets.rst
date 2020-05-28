@@ -241,11 +241,11 @@ of the |layout| |width|/|height|.
 
 You can see here that, although we specify |size_hint_x| and |size_hint_y| both
 to be .5, only |size_hint_y| seems to be honored. That is because |BoxLayout|
-controls the |size_hint_y| when |orientation| is `vertical` and |size_hint_x|
-when |orientation| is 'horizontal'. The controlled dimension's size is calculated depending
-upon the total no. of |children| in the |BoxLayout|. In this example, one child has
-|size_hint_y| controlled (.5/.5 = 1). Thus, the widget takes 100% of the parent
-layout's height.
+controls the |size_hint_y| when |orientation| is either of `lr` or `rl` and
+|size_hint_x| when |orientation| is either of 'bt' or `tb`. The controlled
+dimension's size is calculated depending upon the total no. of |children| in
+the |BoxLayout|. In this example, one child has |size_hint_y| controlled
+(.5/.5 = 1). Thus, the widget takes 100% of the parent layout's height.
 
 Let's add another |Button| to the |layout| and see what happens.
 

@@ -20,7 +20,7 @@ from kivy.uix.boxlayout import BoxLayout
 import time
 Builder.load_string('''
 <CameraClick>:
-    orientation: 'vertical'
+    orientation: 'tb'
     Camera:
         id: camera
         resolution: (640, 480)

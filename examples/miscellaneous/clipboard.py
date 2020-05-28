@@ -8,7 +8,7 @@ import os
 Builder.load_string('''
 #:import Clipboard kivy.core.clipboard.Clipboard
 <Clip>:
-    orientation: 'vertical'
+    orientation: 'tb'
     GridLayout:
         cols: 3
         size_hint_y: None

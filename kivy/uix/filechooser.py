@@ -923,7 +923,7 @@ class FileChooser(FileChooserController):
     .. code-block:: kv
 
         BoxLayout:
-            orientation: 'vertical'
+            orientation: 'tb'
 
             BoxLayout:
                 size_hint_y: None
@@ -1086,7 +1086,7 @@ if __name__ == '__main__':
 
     root = Builder.load_string(textwrap.dedent('''\
     BoxLayout:
-        orientation: 'vertical'
+        orientation: 'tb'
 
         BoxLayout:
             size_hint_y: None

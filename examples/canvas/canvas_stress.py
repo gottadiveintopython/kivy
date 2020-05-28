@@ -61,7 +61,7 @@ class StressCanvasApp(App):
         layout.add_widget(btn_reset)
         layout.add_widget(label)
 
-        root = BoxLayout(orientation='vertical')
+        root = BoxLayout(orientation='tb')
         root.add_widget(wid)
         root.add_widget(layout)
 

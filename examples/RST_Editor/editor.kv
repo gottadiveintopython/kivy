@@ -4,7 +4,7 @@ Root:
     text_input: text_input
 
     BoxLayout:
-        orientation: 'vertical'
+        orientation: 'tb'
         BoxLayout:
             size_hint_y: None
             height: 30
@@ -28,7 +28,7 @@ Root:
     BoxLayout:
         size: root.size
         pos: root.pos
-        orientation: "vertical"
+        orientation: "tb"
         FileChooserListView:
             id: filechooser
 
@@ -48,7 +48,7 @@ Root:
     BoxLayout:
         size: root.size
         pos: root.pos
-        orientation: "vertical"
+        orientation: "tb"
         FileChooserListView:
             id: filechooser
             on_selection: text_input.text = self.selection and self.selection[0] or ''

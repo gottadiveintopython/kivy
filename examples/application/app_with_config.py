@@ -8,7 +8,7 @@ FloatLayout:
         size_hint: .5, .5
         pos_hint: {'center': (.5, .5)}
 
-        orientation: 'vertical'
+        orientation: 'tb'
 
         TextInput:
             text: app.text

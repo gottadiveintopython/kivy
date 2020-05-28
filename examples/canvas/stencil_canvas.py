@@ -72,7 +72,7 @@ class StencilCanvasApp(App):
         layout.add_widget(btn_stencil)
         layout.add_widget(label)
 
-        root = BoxLayout(orientation='vertical')
+        root = BoxLayout(orientation='tb')
         rfl = FloatLayout()
         rfl.add_widget(wid)
         root.add_widget(rfl)

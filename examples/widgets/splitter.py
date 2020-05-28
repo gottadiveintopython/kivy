@@ -3,7 +3,7 @@ from kivy.lang import Builder
 
 bl = Builder.load_string('''
 BoxLayout:
-    orientation: 'vertical'
+    orientation: 'tb'
     BoxLayout:
         size_hint_y: None
         height: sp(60)
@@ -23,7 +23,7 @@ BoxLayout:
             text: 'left btn'
             size_hint_x: 0.3
         BoxLayout:
-            orientation: 'vertical'
+            orientation: 'tb'
             Button:
                 text: "Btn0"
             BoxLayout:
@@ -40,7 +40,7 @@ BoxLayout:
                 BoxLayout:
                     orientation: 'horizontal'
                     BoxLayout:
-                        orientation: 'vertical'
+                        orientation: 'tb'
                         Button:
                             text: "Btn1"
                         Splitter:
@@ -56,7 +56,7 @@ BoxLayout:
                         Button:
                             text: "Btn3"
         BoxLayout:
-            orientation: 'vertical'
+            orientation: 'tb'
             size_hint_x: 0.3
             Button:
                 text: 'right btn'

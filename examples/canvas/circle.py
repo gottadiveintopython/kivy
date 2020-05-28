@@ -15,12 +15,12 @@ from kivy.lang import Builder
 
 kv = '''
 BoxLayout:
-    orientation: 'vertical'
+    orientation: 'tb'
     BoxLayout:
         size_hint_y: None
         height: sp(100)
         BoxLayout:
-            orientation: 'vertical'
+            orientation: 'tb'
             Slider:
                 id: e1
                 min: -360.
@@ -28,7 +28,7 @@ BoxLayout:
             Label:
                 text: 'angle_start = {}'.format(e1.value)
         BoxLayout:
-            orientation: 'vertical'
+            orientation: 'tb'
             Slider:
                 id: e2
                 min: -360.
@@ -41,7 +41,7 @@ BoxLayout:
         size_hint_y: None
         height: sp(100)
         BoxLayout:
-            orientation: 'vertical'
+            orientation: 'tb'
             Slider:
                 id: wm
                 min: 0
@@ -50,7 +50,7 @@ BoxLayout:
             Label:
                 text: 'Width mult. = {}'.format(wm.value)
         BoxLayout:
-            orientation: 'vertical'
+            orientation: 'tb'
             Slider:
                 id: hm
                 min: 0

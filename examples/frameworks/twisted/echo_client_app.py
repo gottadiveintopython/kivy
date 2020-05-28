@@ -56,7 +56,7 @@ class TwistedClientApp(App):
         self.textbox = TextInput(size_hint_y=.1, multiline=False)
         self.textbox.bind(on_text_validate=self.send_message)
         self.label = Label(text='connecting...\n')
-        layout = BoxLayout(orientation='vertical')
+        layout = BoxLayout(orientation='tb')
         layout.add_widget(self.label)
         layout.add_widget(self.textbox)
         return layout

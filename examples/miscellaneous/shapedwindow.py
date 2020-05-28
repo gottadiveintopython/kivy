@@ -20,7 +20,7 @@ Builder.load_string('''
 #:import win kivy.core.window.Window
 
 <Root>:
-    orientation: 'vertical'
+    orientation: 'tb'
     BoxLayout:
         Button:
             text: 'default_shape'

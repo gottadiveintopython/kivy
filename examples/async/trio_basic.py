@@ -7,7 +7,7 @@ from kivy.lang.builder import Builder
 
 kv = '''
 BoxLayout:
-    orientation: 'vertical'
+    orientation: 'tb'
     Button:
         id: btn
         text: 'Press me'

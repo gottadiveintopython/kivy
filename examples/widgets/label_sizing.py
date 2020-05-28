@@ -31,7 +31,7 @@ superlative degree of comparison only.
 # are also defined.
 _kv_code = """
 BoxLayout:
-    orientation: 'vertical'
+    orientation: 'tb'
 
     HeadingLabel:
         text: 'These modify all demonstration Labels'

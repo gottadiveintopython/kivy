@@ -14,7 +14,7 @@
     screen_manager: screen_manager
     auto_reload: chkbx.active
     info_label: info_lbl
-    orientation: 'vertical'
+    orientation: 'tb'
     BoxLayout:
         padding: '2sp'
         canvas:
@@ -48,7 +48,7 @@
             on_release: root.change_kv(*args)
     BoxLayout:
         id: reactive_layout
-        orientation: 'vertical' if self.width < self.height else 'horizontal'
+        orientation: 'tb' if self.width < self.height else 'lr'
 
         Splitter:
             id: editor_pane

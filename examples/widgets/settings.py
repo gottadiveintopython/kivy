@@ -47,7 +47,7 @@ class SettingsApp(App):
         settings_button = Button(text='Open settings')
         settings_button.bind(on_press=self.open_settings)
 
-        layout = BoxLayout(orientation='vertical')
+        layout = BoxLayout(orientation='tb')
         layout.add_widget(paneltype)
         layout.add_widget(buttons)
         layout.add_widget(displaytype)

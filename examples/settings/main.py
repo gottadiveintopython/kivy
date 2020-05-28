@@ -18,7 +18,7 @@ from kivy.lang import Builder
 # We first define our GUI
 kv = '''
 BoxLayout:
-    orientation: 'vertical'
+    orientation: 'tb'
     Button:
         text: 'Configure app (or press F1)'
         on_release: app.open_settings()

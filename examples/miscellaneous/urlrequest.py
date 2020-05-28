@@ -11,7 +11,7 @@ KV = '''
 #:import C kivy.utils.get_color_from_hex
 
 BoxLayout:
-    orientation: 'vertical'
+    orientation: 'tb'
     Label:
         text: 'see https://httpbin.org for more information'
 

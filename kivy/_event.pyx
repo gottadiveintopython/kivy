@@ -353,7 +353,7 @@ cdef class EventDispatcher(ObjectWithUid):
                 """
                 def __init__(self, **kwargs):
                     super(DemoBox, self).__init__(**kwargs)
-                    self.orientation = "vertical"
+                    self.orientation = "tb"
 
                     # We start with binding to a normal event. The only argument
                     # passed to the callback is the object which we have bound to.
@@ -495,7 +495,7 @@ cdef class EventDispatcher(ObjectWithUid):
 
                 def __init__(self, **kwargs):
                     super(DemoBox, self).__init__(**kwargs)
-                    self.orientation = "vertical"
+                    self.orientation = "tb"
 
                     btn = Button(text="Normal binding to event")
                     btn.fbind('on_press', self.on_event)

@@ -46,7 +46,7 @@ class MeshTestApp(App):
             button.bind(on_release=partial(self.change_mode, mode))
             layout.add_widget(button)
 
-        root = BoxLayout(orientation='vertical')
+        root = BoxLayout(orientation='tb')
         root.add_widget(wid)
         root.add_widget(layout)
 

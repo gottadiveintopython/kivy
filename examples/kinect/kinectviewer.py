@@ -227,7 +227,7 @@ class KinectViewer(Widget):
 class KinectViewerApp(App):
 
     def build(self):
-        root = BoxLayout(orientation='vertical')
+        root = BoxLayout(orientation='tb')
 
         self.viewer = viewer = KinectViewer(
             index=self.config.getint('kinect', 'index'),

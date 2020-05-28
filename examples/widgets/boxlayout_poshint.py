@@ -7,7 +7,7 @@ Builder.load_string('''
     cols: 1
 
     BoxLayout:
-        orientation: 'vertical'
+        orientation: 'tb'
         Button:
             size_hint_x: 0.4
             pos_hint: {'x': 0}

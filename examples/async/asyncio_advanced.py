@@ -8,7 +8,7 @@ from kivy.lang.builder import Builder
 
 kv = '''
 BoxLayout:
-    orientation: 'vertical'
+    orientation: 'tb'
     BoxLayout:
         ToggleButton:
             id: btn1
