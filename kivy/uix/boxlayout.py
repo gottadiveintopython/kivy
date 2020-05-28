@@ -16,7 +16,7 @@ Box Layout
 
 To position widgets above/below each other, use a vertical BoxLayout::
 
-    layout = BoxLayout(orientation='vertical')
+    layout = BoxLayout(orientation='tb')
     btn1 = Button(text='Hello')
     btn2 = Button(text='World')
     layout.add_widget(btn1)
@@ -34,13 +34,14 @@ example, we use 10 pixel spacing between children; the first button covers
 
 Position hints are partially working, depending on the orientation:
 
-* If the orientation is `vertical`: `x`, `right` and `center_x` will be used.
-* If the orientation is `horizontal`: `y`, `top` and `center_y` will be used.
+* If the orientation is `tb` or `bt`: `x`, `right` and `center_x` will be
+used.
+* If the orientation is `lr` or `rl`: `y`, `top` and `center_y` will be used.
 
 Kv Example::
 
     BoxLayout:
-        orientation: 'vertical'
+        orientation: 'tb'
         Label:
             text: 'this on top'
         Label:
@@ -76,7 +77,8 @@ __all__ = ('BoxLayout', )
 
 from kivy.uix.layout import Layout
 from kivy.properties import (NumericProperty, OptionProperty,
-                             VariableListProperty, ReferenceListProperty)
+                             VariableListProperty, ReferenceListProperty,
+                             AliasProperty, )
 
 
 class BoxLayout(Layout):
@@ -104,12 +106,14 @@ class BoxLayout(Layout):
     defaults to [0, 0, 0, 0].
     '''
 
-    orientation = OptionProperty('horizontal', options=(
-        'horizontal', 'vertical'))
+    orientation = OptionProperty('lr', options=('lr', 'rl', 'tb', 'bt'))
     '''Orientation of the layout.
 
     :attr:`orientation` is an :class:`~kivy.properties.OptionProperty` and
-    defaults to 'horizontal'. Can be 'vertical' or 'horizontal'.
+    defaults to 'lr'. Can be 'lr', 'rl', 'tb' or 'bt'.
+
+    .. versionchanged:: 2.0.0
+        'horizontal' and 'vertical' are no longer available.
     '''
 
     minimum_width = NumericProperty(0)
@@ -141,6 +145,12 @@ class BoxLayout(Layout):
     only.
     '''
 
+    def get_is_horizontal(self):
+        return self.orientation[0] in 'lr'
+
+    is_horizontal = AliasProperty(
+        get_is_horizontal, bind=('orientation', ), cache=True, )
+
     def __init__(self, **kwargs):
         super(BoxLayout, self).__init__(**kwargs)
         update = self._trigger_layout
@@ -159,6 +169,7 @@ class BoxLayout(Layout):
         padding_left, padding_top, padding_right, padding_bottom = self.padding
         spacing = self.spacing
         orientation = self.orientation
+        is_horizontal = self.is_horizontal
         padding_x = padding_left + padding_right
         padding_y = padding_top + padding_bottom
 
@@ -168,7 +179,7 @@ class BoxLayout(Layout):
         hint = [None] * len_children
         # min size from all the None hint, and from those with sh_min
         minimum_size_bounded = 0
-        if orientation == 'horizontal':
+        if is_horizontal:
             minimum_size_y = 0
             minimum_size_none = padding_x + spacing * (len_children - 1)
 
@@ -222,7 +233,7 @@ class BoxLayout(Layout):
         selfx = self.x
         selfy = self.y
 
-        if orientation == 'horizontal':
+        if is_horizontal:
             stretch_space = max(0.0, self.width - minimum_size_none)
             dim = 0
         else:
@@ -252,11 +263,13 @@ class BoxLayout(Layout):
                     (val[3][dim] for val in sizes),
                     (elem[4][dim] for elem in sizes), hint)
 
-        if orientation == 'horizontal':
+        is_forward_direction = orientation[0] in 'lb'
+        if is_horizontal:
             x = padding_left + selfx
             size_y = self.height - padding_y
             for i, (sh, ((w, h), (_, shh), pos_hint, _, _)) in enumerate(
-                    zip(reversed(hint), reversed(sizes))):
+                    zip(reversed(hint), reversed(sizes)) if
+                    is_forward_direction else zip(hint, sizes)):
                 cy = selfy + padding_bottom
 
                 if sh:
@@ -280,7 +293,8 @@ class BoxLayout(Layout):
             y = padding_bottom + selfy
             size_x = self.width - padding_x
             for i, (sh, ((w, h), (shw, _), pos_hint, _, _)) in enumerate(
-                    zip(hint, sizes)):
+                    zip(reversed(hint), reversed(sizes)) if
+                    is_forward_direction else zip(hint, sizes)):
                 cx = selfx + padding_left
 
                 if sh:

@@ -36,7 +36,7 @@ class UIXBoxLayoutTestcase(GraphicUnitTest):
         layout.add_widget(b(0, 0, 1))
         r(layout)
 
-        layout = BoxLayout(orientation='vertical')
+        layout = BoxLayout(orientation='tb')
         layout.add_widget(b(1, 0, 0))
         layout.add_widget(b(0, 1, 0))
         layout.add_widget(b(0, 0, 1))
@@ -53,7 +53,7 @@ class UIXBoxLayoutTestcase(GraphicUnitTest):
         layout.add_widget(b(0, 0, 1))
         r(layout)
 
-        layout = BoxLayout(spacing=20, orientation='vertical')
+        layout = BoxLayout(spacing=20, orientation='tb')
         layout.add_widget(b(1, 0, 0))
         layout.add_widget(b(0, 1, 0))
         layout.add_widget(b(0, 0, 1))
@@ -70,7 +70,7 @@ class UIXBoxLayoutTestcase(GraphicUnitTest):
         layout.add_widget(b(0, 0, 1))
         r(layout)
 
-        layout = BoxLayout(padding=20, orientation='vertical')
+        layout = BoxLayout(padding=20, orientation='tb')
         layout.add_widget(b(1, 0, 0))
         layout.add_widget(b(0, 1, 0))
         layout.add_widget(b(0, 0, 1))
@@ -87,7 +87,7 @@ class UIXBoxLayoutTestcase(GraphicUnitTest):
         layout.add_widget(b(0, 0, 1))
         r(layout)
 
-        layout = BoxLayout(spacing=20, padding=20, orientation='vertical')
+        layout = BoxLayout(spacing=20, padding=20, orientation='tb')
         layout.add_widget(b(1, 0, 0))
         layout.add_widget(b(0, 1, 0))
         layout.add_widget(b(0, 0, 1))
