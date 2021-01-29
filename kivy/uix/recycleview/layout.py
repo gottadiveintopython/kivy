@@ -134,12 +134,8 @@ apply_selection` method will be called every time the view needs to refresh
             `is_selected`: bool
                 Whether the item is selected.
         '''
-        viewclass = view.__class__
-        if viewclass not in _view_base_cache:
-            _view_base_cache[viewclass] = isinstance(view,
-                                                     RecycleDataViewBehavior)
-
-        if _view_base_cache[viewclass]:
+        if _view_base_cache.setdefault(
+                view.__class__, isinstance(view, RecycleDataViewBehavior)):
             view.apply_selection(self.recycleview, index, is_selected)
 
     def refresh_view_layout(self, index, layout, view, viewport):

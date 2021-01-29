@@ -277,12 +277,8 @@ class RecycleDataAdapter(EventDispatcher):
         .. note::
             Any sizing and position info is skipped when syncing with the data.
         '''
-        viewclass = view.__class__
-        if viewclass not in _view_base_cache:
-            _view_base_cache[viewclass] = isinstance(view,
-                                                     RecycleDataViewBehavior)
-
-        if _view_base_cache[viewclass]:
+        if _view_base_cache.setdefault(
+                view.__class__, isinstance(view, RecycleDataViewBehavior)):
             view.refresh_view_attrs(self.recycleview, index, data_item)
         else:
             sizing_attrs = RecycleDataAdapter._sizing_attrs
@@ -302,11 +298,8 @@ class RecycleDataAdapter(EventDispatcher):
         .. note::
             Any sizing and position info is skipped when syncing with the data.
         '''
-        if view.__class__ not in _view_base_cache:
-            _view_base_cache[view.__class__] = isinstance(
-                view, RecycleDataViewBehavior)
-
-        if _view_base_cache[view.__class__]:
+        if _view_base_cache.setdefault(
+                view.__class__, isinstance(view, RecycleDataViewBehavior)):
             view.refresh_view_layout(
                 self.recycleview, index, layout, viewport)
         else:
