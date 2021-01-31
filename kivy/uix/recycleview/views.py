@@ -95,14 +95,11 @@ class RecycleDataViewBehavior(object):
             to layout further since it'll be overwritten again soon.
         '''
         w, h = layout.pop('size')
-        if w is None:
-            if h is not None:
-                self.height = h
-        else:
-            if h is None:
-                self.width = w
-            else:
-                self.size = w, h
+
+        if w is not None:
+            self.width = w
+        if h is not None:
+            self.height = h
 
         for name, value in layout.items():
             setattr(self, name, value)
@@ -304,14 +301,10 @@ class RecycleDataAdapter(EventDispatcher):
                 self.recycleview, index, layout, viewport)
         else:
             w, h = layout.pop('size')
-            if w is None:
-                if h is not None:
-                    view.height = h
-            else:
-                if h is None:
-                    view.width = w
-                else:
-                    view.size = w, h
+            if w is not None:
+                self.width = w
+            if h is not None:
+                self.height = h
 
             for name, value in layout.items():
                 setattr(view, name, value)
