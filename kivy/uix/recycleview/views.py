@@ -52,7 +52,7 @@ def _clean_cache():
 
 
 class RecycleDataViewBehavior(object):
-    '''A optional base class for data views (:attr:`RecycleView`.viewclass).
+    '''An optional base class for data views (:attr:`RecycleView`.viewclass).
     If a view inherits from this class, the class's functions will be called
     when the view needs to be updated due to a data change or layout update.
     '''
@@ -291,9 +291,6 @@ class RecycleDataAdapter(EventDispatcher):
         This method calls :meth:`RecycleDataViewBehavior.refresh_view_attrs`
         if the view inherits from :class:`RecycleDataViewBehavior`. See that
         method for more details.
-
-        .. note::
-            Any sizing and position info is skipped when syncing with the data.
         '''
         if _view_base_cache.setdefault(
                 view.__class__, isinstance(view, RecycleDataViewBehavior)):
