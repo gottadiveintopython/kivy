@@ -6,6 +6,7 @@ Order matter.
 On the screen, most of example must have the red->blue->green order.
 '''
 
+import pytest
 from kivy.tests.common import GraphicUnitTest
 
 
@@ -92,3 +93,101 @@ class UIXBoxLayoutTestcase(GraphicUnitTest):
         layout.add_widget(b(0, 1, 0))
         layout.add_widget(b(0, 0, 1))
         r(layout)
+
+
+class Test_internal_property:
+    @pytest.mark.parametrize(
+        "ori, expect", [
+            ('horizontal', True, ),
+            ('lr', True, ),
+            ('rl', True, ),
+            ('vertical', False, ),
+            ('tb', False, ),
+            ('bt', False, ),
+        ]
+    )
+    def test_is_horizontal(self, ori, expect):
+        from kivy.uix.boxlayout import BoxLayout
+        box = BoxLayout(orientation=ori)
+        assert box._is_horizontal is expect
+
+    @pytest.mark.parametrize(
+        "ori, expect", [
+            ('horizontal', True, ),
+            ('lr', True, ),
+            ('rl', False, ),
+            ('vertical', False, ),
+            ('tb', False, ),
+            ('bt', True, ),
+        ]
+    )
+    def test_is_forward_direction(self, ori, expect):
+        from kivy.uix.boxlayout import BoxLayout
+        box = BoxLayout(orientation=ori)
+        assert box._is_forward_direction is expect
+
+
+class Test_children_pos:
+    def compute_layout(self, *, ori, n_children):
+        from kivy.uix.widget import Widget
+        from kivy.uix.boxlayout import BoxLayout
+        box = BoxLayout(orientation=ori, pos=(0, 0, ), size=(400, 400, ))
+        for __ in range(n_children):
+            # Set the position of the children to a value other than the
+            # default (0, 0) to ensure that the result is not affected by the
+            # default position.
+            box.add_widget(Widget(
+                size_hint=(None, None), size=(100, 100), pos=(8, 8)))
+        box.do_layout()
+        return [tuple(c.pos) for c in reversed(box.children)]
+
+    # |
+    # |---|
+    # | 0 |
+    # |---|---
+    def test_1x1(self):
+        from kivy.uix.boxlayout import BoxLayout
+        for ori in BoxLayout.orientation.options:
+            assert [(0, 0), ] == self.compute_layout(n_children=1, ori=ori)
+
+    # |
+    # |---|---|---|
+    # | 0 | 1 | 2 |
+    # |---|---|---|---
+    @pytest.mark.parametrize('ori', ['horizontal', 'lr', ])
+    def test_3x1_lr(self, ori):
+        assert [(0, 0), (100, 0), (200, 0), ] == \
+            self.compute_layout(n_children=3, ori=ori)
+
+    # |
+    # |---|---|---|
+    # | 2 | 1 | 0 |
+    # |---|---|---|---
+    def test_3x1_rl(self):
+        assert [(200, 0), (100, 0), (0, 0), ] == \
+            self.compute_layout(n_children=3, ori='rl')
+
+    # |
+    # |---|
+    # | 0 |
+    # |---|
+    # | 1 |
+    # |---|
+    # | 2 |
+    # |---|---
+    @pytest.mark.parametrize('ori', ['vertical', 'tb', ])
+    def test_1x3_tb(self, ori):
+        assert [(0, 200), (0, 100), (0, 0), ] == \
+            self.compute_layout(n_children=3, ori=ori)
+
+    # |
+    # |---|
+    # | 2 |
+    # |---|
+    # | 1 |
+    # |---|
+    # | 0 |
+    # |---|---
+    def test_1x3_bt(self):
+        assert [(0, 0), (0, 100), (0, 200), ] == \
+            self.compute_layout(n_children=3, ori='bt')
