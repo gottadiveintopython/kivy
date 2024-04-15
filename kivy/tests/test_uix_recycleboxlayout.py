@@ -4,9 +4,9 @@ import pytest
 
 class Test_children_pos_when_all_the_data_is_visible:
     @classmethod
-    def gen_size(cls, *, ori):
+    def gen_size(cls, is_horizontal):
         w = h = 100
-        if ori in ('horizontal', 'lr', 'rl'):
+        if is_horizontal:
             w_incr, h_incr = 100, 0
         else:
             w_incr, h_incr = 0, 100
@@ -31,9 +31,10 @@ class Test_children_pos_when_all_the_data_is_visible:
                     orientation: '{ori}'
                     default_size_hint: None, None
             '''))
+        size_iter = cls.gen_size(rv.ids.layout._is_horizontal)
         rv.data = [
             {'width': w, 'height': h, }
-            for w, h in itertools.islice(cls.gen_size(ori=ori), n_data)
+            for w, h in itertools.islice(size_iter, n_data)
         ]
         clock.tick()
         clock.tick()

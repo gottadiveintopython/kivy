@@ -129,9 +129,9 @@ class Test_internal_property:
 
 class Test_children_pos:
     @classmethod
-    def gen_size(cls, *, ori):
+    def gen_size(cls, is_horizontal):
         w = h = 100
-        if ori in ('horizontal', 'lr', 'rl'):
+        if is_horizontal:
             w_incr, h_incr = 100, 0
         else:
             w_incr, h_incr = 0, 100
@@ -145,7 +145,8 @@ class Test_children_pos:
         from kivy.uix.label import Label
         from kivy.uix.boxlayout import BoxLayout
         box = BoxLayout(orientation=ori, pos=(0, 0, ), size=(400, 400, ))
-        for i, size in zip(range(n_children), cls.gen_size(ori=ori)):
+        size_iter = cls.gen_size(box._is_horizontal)
+        for i, size in zip(range(n_children), size_iter):
             # Set the position of the children to a value other than the
             # default (0, 0) to ensure that the result is not affected by the
             # default position.
