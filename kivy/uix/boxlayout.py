@@ -171,7 +171,6 @@ class BoxLayout(Layout):
     def _iterate_layout(self, sizes):
         # optimize layout by preventing looking at the same attribute in a loop
         len_children = len(sizes)
-        indices = tuple(range(len_children))
         padding_left, padding_top, padding_right, padding_bottom = self.padding
         spacing = self.spacing
         is_horizontal = self._is_horizontal
@@ -189,7 +188,7 @@ class BoxLayout(Layout):
             minimum_size_none = padding_x + spacing * (len_children - 1)
 
             for i, ((w, h), (shw, shh), _, (shw_min, shh_min),
-                    (shw_max, _)) in zip(indices, sizes):
+                    (shw_max, _)) in enumerate(sizes):
                 if shw is None:
                     minimum_size_none += w
                 else:
@@ -213,7 +212,7 @@ class BoxLayout(Layout):
             minimum_size_none = padding_y + spacing * (len_children - 1)
 
             for i, ((w, h), (shw, shh), _, (shw_min, shh_min),
-                    (_, shh_max)) in zip(indices, sizes):
+                    (_, shh_max)) in enumerate(sizes):
                 if shh is None:
                     minimum_size_none += h
                 else:
@@ -251,7 +250,7 @@ class BoxLayout(Layout):
                 # there's no space, so just set to min size or zero
                 stretch_sum = stretch_space = 1.
 
-                for i, val in zip(indices, sizes):
+                for i, val in enumerate(sizes):
                     sh = val[1][dim]
                     if sh is None:
                         continue
@@ -268,12 +267,15 @@ class BoxLayout(Layout):
                     (val[3][dim] for val in sizes),
                     (elem[4][dim] for elem in sizes), hint)
 
-        zipped_iter = zip(reversed(indices), reversed(hint), reversed(sizes)) \
-            if self._is_forward_direction else zip(indices, hint, sizes)
+        if self._is_forward_direction:
+            zipped_iters = zip(range(len_children - 1, -1, -1), reversed(hint),
+                               reversed(sizes))
+        else:
+            zipped_iters = zip(range(len_children), hint, sizes)
         if is_horizontal:
             x = padding_left + selfx
             size_y = self.height - padding_y
-            for i, sh, ((w, h), (_, shh), pos_hint, _, _) in zipped_iter:
+            for i, sh, ((w, h), (_, shh), pos_hint, _, _) in zipped_iters:
                 cy = selfy + padding_bottom
 
                 if sh:
@@ -296,7 +298,7 @@ class BoxLayout(Layout):
         else:
             y = padding_bottom + selfy
             size_x = self.width - padding_x
-            for i, sh, ((w, h), (shw, _), pos_hint, _, _) in zipped_iter:
+            for i, sh, ((w, h), (shw, _), pos_hint, _, _) in zipped_iters:
                 cx = selfx + padding_left
 
                 if sh:
