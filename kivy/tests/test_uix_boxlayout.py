@@ -130,6 +130,12 @@ class Test_internal_property:
 class Test_children_pos:
     @classmethod
     def gen_size(cls, is_horizontal):
+        '''
+        >>> list(gen_size(True))
+        [(100, 100), (200, 100), (300, 100), ...]
+        >>> list(gen_size(False))
+        [(100, 100), (100, 200), (100, 300), ...]
+        '''
         w = h = 100
         if is_horizontal:
             w_incr, h_incr = 100, 0
