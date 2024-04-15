@@ -1,8 +1,22 @@
+import itertools
 import pytest
 
 
 class Test_children_pos_when_all_the_data_is_visible:
-    def compute_layout(self, *, ori, n_data, clock):
+    @classmethod
+    def gen_size(cls, *, ori):
+        w = h = 100
+        if ori in ('horizontal', 'lr', 'rl'):
+            w_incr, h_incr = 100, 0
+        else:
+            w_incr, h_incr = 0, 100
+        while True:
+            yield (w, h, )
+            w += w_incr
+            h += h_incr
+
+    @classmethod
+    def compute_layout(cls, *, ori, n_data, clock):
         '''Returns {view-index: pos, view-index: pos, ...}'''
         from textwrap import dedent
         from kivy.lang import Builder
@@ -11,14 +25,16 @@ class Test_children_pos_when_all_the_data_is_visible:
         rv = Builder.load_string(dedent(f'''
             RecycleView:
                 viewclass: 'Widget'
-                size: 400, 400
-                data: ({{}} for __ in range({n_data}))
+                size: 1000, 1000
                 RecycleBoxLayout:
                     id: layout
                     orientation: '{ori}'
                     default_size_hint: None, None
-                    default_size: 100, 100
             '''))
+        rv.data = [
+            {'width': w, 'height': h, }
+            for w, h in itertools.islice(cls.gen_size(ori=ori), n_data)
+        ]
         clock.tick()
         clock.tick()
         layout = rv.ids.layout
@@ -38,45 +54,51 @@ class Test_children_pos_when_all_the_data_is_visible:
                 n_data=1, ori=ori, clock=kivy_clock)
 
     # |
-    # |---|---|---|
-    # | 0 | 1 | 2 |
-    # |---|---|---|---
+    # |---|-----|-------|
+    # | 0 |  1  |   2   |
+    # |---|-----|-------|---
     @pytest.mark.parametrize('ori', ['horizontal', 'lr', ])
     def test_3x1_lr(self, kivy_clock, ori):
-        assert {0: (0, 0), 1: (100, 0), 2: (200, 0), } == \
+        assert {0: (0, 0), 1: (100, 0), 2: (300, 0), } == \
             self.compute_layout(n_data=3, ori=ori, clock=kivy_clock)
 
     # |
-    # |---|---|---|
-    # | 2 | 1 | 0 |
-    # |---|---|---|---
+    # |-------|-----|---|
+    # |   2   |  1  | 0 |
+    # |-------|-----|---|---
     def test_3x1_rl(self, kivy_clock):
-        assert {0: (200, 0), 1: (100, 0), 2: (0, 0), } == \
+        assert {0: (500, 0), 1: (300, 0), 2: (0, 0), } == \
             self.compute_layout(n_data=3, ori='rl', clock=kivy_clock)
 
     # |
     # |---|
     # | 0 |
     # |---|
+    # |   |
     # | 1 |
     # |---|
+    # |   |
     # | 2 |
+    # |   |
     # |---|---
     @pytest.mark.parametrize('ori', ['vertical', 'tb', ])
     def test_1x3_tb(self, kivy_clock, ori):
-        assert {0: (0, 200), 1: (0, 100), 2: (0, 0), } == \
+        assert {0: (0, 500), 1: (0, 300), 2: (0, 0), } == \
             self.compute_layout(n_data=3, ori=ori, clock=kivy_clock)
 
     # |
     # |---|
+    # |   |
     # | 2 |
+    # |   |
     # |---|
+    # |   |
     # | 1 |
     # |---|
     # | 0 |
     # |---|---
     def test_1x3_bt(self, kivy_clock):
-        assert {0: (0, 0), 1: (0, 100), 2: (0, 200), } == \
+        assert {0: (0, 0), 1: (0, 100), 2: (0, 300), } == \
             self.compute_layout(n_data=3, ori='bt', clock=kivy_clock)
 
 
