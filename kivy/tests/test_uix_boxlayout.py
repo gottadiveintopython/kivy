@@ -142,17 +142,17 @@ class Test_children_pos:
 
     @classmethod
     def compute_layout(cls, *, ori, n_children):
-        from kivy.uix.widget import Widget
+        from kivy.uix.label import Label
         from kivy.uix.boxlayout import BoxLayout
         box = BoxLayout(orientation=ori, pos=(0, 0, ), size=(400, 400, ))
-        for __, size in zip(range(n_children), cls.gen_size(ori=ori)):
+        for i, size in zip(range(n_children), cls.gen_size(ori=ori)):
             # Set the position of the children to a value other than the
             # default (0, 0) to ensure that the result is not affected by the
             # default position.
-            box.add_widget(Widget(
-                size_hint=(None, None), size=size, pos=(8, 8)))
+            box.add_widget(Label(
+                text=str(i), size_hint=(None, None), size=size, pos=(8, 8)))
         box.do_layout()
-        return [tuple(c.pos) for c in reversed(box.children)]
+        return {int(c.text): tuple(c.pos) for c in box.children}
 
     # |
     # |---|
@@ -161,7 +161,7 @@ class Test_children_pos:
     def test_1x1(self):
         from kivy.uix.boxlayout import BoxLayout
         for ori in BoxLayout.orientation.options:
-            assert [(0, 0), ] == self.compute_layout(n_children=1, ori=ori)
+            assert {0: (0, 0), } == self.compute_layout(n_children=1, ori=ori)
 
     # |
     # |---|-----|-------|
@@ -169,7 +169,7 @@ class Test_children_pos:
     # |---|-----|-------|---
     @pytest.mark.parametrize('ori', ['horizontal', 'lr', ])
     def test_3x1_lr(self, ori):
-        assert [(0, 0), (100, 0), (300, 0), ] == \
+        assert {0: (0, 0), 1: (100, 0), 2: (300, 0), } == \
             self.compute_layout(n_children=3, ori=ori)
 
     # |
@@ -177,7 +177,7 @@ class Test_children_pos:
     # |   2   |  1  | 0 |
     # |-------|-----|---|---
     def test_3x1_rl(self):
-        assert [(500, 0), (300, 0), (0, 0), ] == \
+        assert {2: (0, 0), 1: (300, 0), 0: (500, 0), } == \
             self.compute_layout(n_children=3, ori='rl')
 
     # |
@@ -193,7 +193,7 @@ class Test_children_pos:
     # |---|---
     @pytest.mark.parametrize('ori', ['vertical', 'tb', ])
     def test_1x3_tb(self, ori):
-        assert [(0, 500), (0, 300), (0, 0), ] == \
+        assert {2: (0, 0), 1: (0, 300), 0: (0, 500), } == \
             self.compute_layout(n_children=3, ori=ori)
 
     # |
@@ -208,5 +208,5 @@ class Test_children_pos:
     # | 0 |
     # |---|---
     def test_1x3_bt(self):
-        assert [(0, 0), (0, 100), (0, 300), ] == \
+        assert {0: (0, 0), 1: (0, 100), 2: (0, 300), } == \
             self.compute_layout(n_children=3, ori='bt')
