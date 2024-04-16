@@ -189,3 +189,49 @@ class Test_children_pos_when_only_a_part_of_the_data_is_visible:
     def test_1x4_bt(self, kivy_clock):
         assert {1: (0, 100), 2: (0, 200), } == self.compute_layout(
             n_data=4, ori='bt', scroll_to=(0, 150), clock=kivy_clock)
+
+
+class Test_spacing:
+    def compute_layout(self, *, ori, n_data, clock):
+        '''Returns {view-index: pos, view-index: pos, ...}'''
+        from textwrap import dedent
+        from kivy.lang import Builder
+
+        # Use Kvlang because RecycleView cannot be constructed from python
+        rv = Builder.load_string(dedent(f'''
+            RecycleView:
+                viewclass: 'Widget'
+                size: 1000, 1000
+                data: ({{}} for __ in range({n_data}))
+                RecycleBoxLayout:
+                    id: layout
+                    orientation: '{ori}'
+                    default_size_hint: None, None
+                    default_size: 100, 100
+                    size_hint: None, None
+                    size: 400, 400
+            '''))
+        clock.tick()
+        clock.tick()
+        layout = rv.ids.layout
+        return {
+            layout.get_view_index_at(c.center): tuple(c.pos)
+            for c in layout.children
+        }
+
+    # |
+    # |---|---|---|---|
+    # |   | 1 | 2 |   |
+    # |---|---|---|---|---
+    @pytest.mark.parametrize('ori', ['horizontal', 'lr', ])
+    def test_4x1_lr(self, kivy_clock, ori):
+        assert {1: (100, 0), 2: (200, 0), } == self.compute_layout(
+            n_data=4, ori=ori, scroll_to=(150, 0), clock=kivy_clock)
+
+    # |
+    # |---|---|---|---|
+    # |   | 2 | 1 |   |
+    # |---|---|---|---|---
+    def test_4x1_rl(self, kivy_clock):
+        assert {1: (200, 0), 2: (100, 0), } == self.compute_layout(
+            n_data=4, ori='rl', scroll_to=(150, 0), clock=kivy_clock)
