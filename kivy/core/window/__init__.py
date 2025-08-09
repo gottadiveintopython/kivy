@@ -24,7 +24,7 @@ from kivy.event import EventDispatcher
 from kivy.properties import ListProperty, ObjectProperty, AliasProperty, \
     NumericProperty, OptionProperty, StringProperty, BooleanProperty, \
     ColorProperty
-from kivy.utils import platform, reify, deprecated, pi_version
+from kivy.utils import platform, deprecated, pi_version
 from kivy.context import get_current_context
 from kivy.uix.behaviors import FocusBehavior
 from kivy.setupconfig import USE_SDL3

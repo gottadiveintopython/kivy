@@ -16,9 +16,9 @@ algebraic and platform functions.
 __all__ = ('intersection', 'difference', 'strtotuple',
            'get_color_from_hex', 'get_hex_from_color', 'get_random_color',
            'is_color_transparent', 'hex_colormap', 'colormap', 'boundary',
-           'deprecated', 'SafeList',
+           'deprecated',
            'interpolate', 'QueryDict',
-           'platform', 'escape_markup', 'reify', 'rgba', 'pi_version',
+           'platform', 'escape_markup', 'rgba', 'pi_version',
            'format_bytes_to_human')
 
 from os import environ, path
@@ -353,27 +353,6 @@ def interpolate(value_from, value_to, step=10):
         return value_from + (value_to - value_from) / float(step)
 
 
-class SafeList(list):
-    '''List with a clear() method.
-
-    .. warning::
-        Usage of the iterate() function will decrease your performance.
-    '''
-
-    @deprecated
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-
-    def clear(self):
-        del self[:]
-
-    @deprecated
-    def iterate(self, reverse=False):
-        if reverse:
-            return iter(reversed(self))
-        return iter(self)
-
-
 class QueryDict(dict):
     '''QueryDict is a dict() that can be queried with dot.
 
@@ -480,40 +459,6 @@ def escape_markup(text):
     .. versionadded:: 1.3.0
     '''
     return text.replace('&', '&amp;').replace('[', '&bl;').replace(']', '&br;')
-
-
-class reify(object):
-    '''
-    Put the result of a method which uses this (non-data) descriptor decorator
-    in the instance dict after the first call, effectively replacing the
-    decorator with an instance variable.
-
-    It acts like @property, except that the function is only ever called once;
-    after that, the value is cached as a regular attribute. This gives you lazy
-    attribute creation on objects that are meant to be immutable.
-
-    Taken from the `Pyramid project <https://pypi.python.org/pypi/pyramid/>`_.
-
-    To use this as a decorator::
-
-         @reify
-         def lazy(self):
-              ...
-              return hard_to_compute_int
-         first_time = self.lazy   # lazy is reify obj, reify.__get__() runs
-         second_time = self.lazy  # lazy is hard_to_compute_int
-    '''
-
-    def __init__(self, func):
-        self.func = func
-        self.__doc__ = func.__doc__
-
-    def __get__(self, inst, cls):
-        if inst is None:
-            return self
-        retval = self.func(inst)
-        setattr(inst, self.func.__name__, retval)
-        return retval
 
 
 def _get_pi_version():

@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+from functools import cached_property
 
 from kivy.app import App
 from kivy.lang import Builder
@@ -215,15 +216,12 @@ Yiddish:        דער גיך ברוין פוקס דזשאַמפּס איבער 
         self._popup.open()
 
 
-from kivy.utils import reify
-
-
 class unicode_app(App):
 
     def build(self):
         return Unicode_TextInput()
 
-    @reify
+    @cached_property
     def get_font_list(self):
         '''Get a list of all the fonts available on this system.
         '''

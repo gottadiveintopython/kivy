@@ -8,9 +8,9 @@ import unittest
 from unittest.mock import patch
 
 from kivy.utils import (boundary, escape_markup, format_bytes_to_human,
-        is_color_transparent, SafeList, get_random_color, get_hex_from_color,
+        is_color_transparent, get_random_color, get_hex_from_color,
         get_color_from_hex, strtotuple, QueryDict, intersection, difference,
-        interpolate, _get_platform, deprecated, reify)
+        interpolate, _get_platform, deprecated)
 from kivy import utils
 
 
@@ -51,28 +51,6 @@ class UtilsTest(unittest.TestCase):
 
     def test_deprecated(self):
         self.a_deprecated_function()
-
-    def test_SafeList_iterate(self):  # deprecated
-        sl = SafeList(['1', 2, 3.])
-        self.assertTrue(isinstance(sl, list))
-        it = sl.iterate()
-        self.assertEqual(next(it), '1')
-        self.assertEqual(next(it), 2)
-        self.assertEqual(next(it), 3.)
-
-    def test_SafeList_iterate_reverse(self):  # deprecated
-        sl = SafeList(['1', 2, 3.])
-        self.assertTrue(isinstance(sl, list))
-        it = sl.iterate(reverse=True)
-        self.assertEqual(next(it), 3.)
-        self.assertEqual(next(it), 2)
-        self.assertEqual(next(it), '1')
-
-    def test_SafeList_clear(self):
-        sl = SafeList(['1', 2, 3.])
-        self.assertTrue(isinstance(sl, list))
-        sl.clear()
-        self.assertEqual(len(sl), 0)
 
     def test_get_random_color_fixed_alpha(self):
         actual = get_random_color()
@@ -170,22 +148,6 @@ class UtilsTest(unittest.TestCase):
         for i in range(0, 3):
             p = interpolate(p, [100, -100])
             self.assertEqual(p, [x[i], y[i]])
-
-    @reify
-    def fib_100(self):
-        """ return 100th Fibonacci number
-        This uses modern view of F sub 1 = 0, F sub 2 = 1. """
-        # print("calculating...")
-        a, b = 0, 1
-        for n in range(2, 101):
-            a, b = b, a + b
-        return b
-
-    def test_reify(self):
-        # slow. self.fib_100 is a reify object making the lazy call.
-        first = self.fib_100
-        second = self.fib_100  # fast, self.fib_100 is a long.
-        assert first == second
 
     def test_Platform_android(self):
         with patch.dict('os.environ', {'KIVY_BUILD': 'android'}):
